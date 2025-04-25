@@ -1,7 +1,7 @@
 {
   "name": "dotdatabase",
   "version": "1.0.2",
-  "description": "",
+  "description": "A leightweight easy to use local json database",
   "main": "src/dotdb.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
