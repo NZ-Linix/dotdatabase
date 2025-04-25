@@ -3,7 +3,7 @@ DotDB is a easy to use and leightweight local database that uses JSON to store d
 You can install it by running:
 
 ```sh
-npm install dotdb
+npm install dotdatabase
 ```
 
 # Getting started
@@ -11,7 +11,7 @@ npm install dotdb
 To create a database, you need to import dotdb and create a new instance of the class.
 
 ```typescript
-import DotDB from "dotdb";
+import DotDB from "dotdatabase";
 
 const database = new DotDB("./path-to-your-db.json");
 ```

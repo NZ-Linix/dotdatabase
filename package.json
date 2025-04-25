@@ -1,5 +1,5 @@
 {
-  "name": "dotdb",
+  "name": "dotdatabase",
   "version": "1.0.2",
   "description": "",
   "main": "src/dotdb.ts",
