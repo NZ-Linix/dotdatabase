@@ -6,6 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "homepage": "https://github.com/NZ-Linix/dotdatabase#readme",
+  "bugs": {
+    "url": "https://github.com/NZ-Linix/dotdatabase/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NZ-Linix/dotdatabase.git"
+  },
   "keywords": ["database", "db", "dotdb", "dot", "dotdatabase", "jsondb", "local", "localdb", "json"],
   "author": "NZ-Linix",
   "license": "MIT",
