@@ -1,0 +1,19 @@
+{
+  "name": "dotdb",
+  "version": "1.0.2",
+  "description": "",
+  "main": "src/dotdb.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "NZ-Linix",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "@types/node": "^22.15.2",
+    "tsc": "^2.0.4",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  }
+}
