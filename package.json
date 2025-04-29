@@ -1,6 +1,6 @@
 {
   "name": "dotdatabase",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A leightweight easy to use local json database",
   "main": "dist/dotdb.js",
   "types": "dist/dotdb.d.ts",
