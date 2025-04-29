@@ -2,9 +2,10 @@
   "name": "dotdatabase",
   "version": "1.0.2",
   "description": "A leightweight easy to use local json database",
-  "main": "src/dotdb.ts",
+  "main": "dist/dotdb.js",
+  "types": "dist/dotdb.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "homepage": "https://github.com/NZ-Linix/dotdatabase#readme",
   "bugs": {
@@ -14,14 +15,26 @@
     "type": "git",
     "url": "git+https://github.com/NZ-Linix/dotdatabase.git"
   },
-  "keywords": ["database", "db", "dotdb", "dot", "dotdatabase", "jsondb", "local", "localdb", "json"],
+  "keywords": [
+    "database",
+    "db",
+    "dotdb",
+    "dot",
+    "dotdatabase",
+    "jsondb",
+    "local",
+    "localdb",
+    "json"
+  ],
   "author": "NZ-Linix",
   "license": "MIT",
   "type": "commonjs",
   "dependencies": {
     "@types/node": "^22.15.2",
     "tsc": "^2.0.4",
-    "tsx": "^4.19.3",
+    "tsx": "^4.19.3"
+  },
+  "devDependencies": {
     "typescript": "^5.8.3"
   }
 }
