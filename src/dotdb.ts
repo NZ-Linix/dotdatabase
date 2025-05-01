@@ -378,4 +378,4 @@ class DotDB {
 
 }
 
-export default DotDB;
+export { DotDB } ;
