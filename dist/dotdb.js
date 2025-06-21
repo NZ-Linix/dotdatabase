@@ -12,6 +12,19 @@ class DotDB {
                 const data = await fs_1.default.readFileSync(this.path, "utf8");
             }
             catch (error) {
+                if (!fs_1.default.existsSync(this.path)) {
+                    const dir = this.path.substring(0, this.path.lastIndexOf('/'));
+                    if (dir && !fs_1.default.existsSync(dir)) {
+                        fs_1.default.mkdirSync(dir, { recursive: true });
+                    }
+                    try {
+                        await fs_1.default.writeFileSync(this.path, "{}");
+                    }
+                    catch (error) {
+                        throw new Error(`Error creating file: ${this.path}`);
+                    }
+                    return;
+                }
                 await fs_1.default.writeFileSync(this.path, JSON.stringify({}));
             }
             try {

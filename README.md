@@ -5,7 +5,9 @@ You can install it by running:
 ```sh
 npm install dotdatabase
 ```
-The NPM package can be found [here](https://www.npmjs.com/package/dotdatabase).
+The NPM package can be found [here](https://www.npmjs.com/package/dotdatabase).  
+  
+Current Version: `1.1.0`
 
 # Getting started
 
