@@ -7,7 +7,7 @@ npm install dotdatabase
 ```
 The NPM package can be found [here](https://www.npmjs.com/package/dotdatabase).  
   
-Current Version: `1.1.0`
+Current Version: `1.1.2` (Stable Version)
 
 # Getting started
 
@@ -16,7 +16,9 @@ To create a database, you need to import dotdb and create a new instance of the 
 ```typescript
 import DotDB from "dotdatabase";
 
-const database = new DotDB("./path-to-your-db.json");
+const database = new DotDB("path/to/your/db.json"); // Directories
+// OR
+const database = new DotDB("db.json"); // In the root directory
 ```
 
 # Methods

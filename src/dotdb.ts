@@ -395,4 +395,5 @@ class DotDB {
 
 }
 
-export { DotDB } ;
+export default DotDB;
+module.exports = DotDB;

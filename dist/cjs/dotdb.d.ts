@@ -13,5 +13,5 @@ declare class DotDB {
     keys(): Promise<string[]>;
     values(): Promise<any[]>;
 }
-export { DotDB };
+export default DotDB;
 //# sourceMappingURL=dotdb.d.ts.map
