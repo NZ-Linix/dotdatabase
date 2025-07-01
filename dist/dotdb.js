@@ -328,3 +328,4 @@ class DotDB {
 }
 exports.default = DotDB;
 module.exports = DotDB;
+module.exports.default = DotDB;
