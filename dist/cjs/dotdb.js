@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
 class DotDB {
     constructor(path) {
-        this.validate = async () => {
+        this.validate = () => {
             try {
-                const data = await fs_1.default.readFileSync(this.path, "utf8");
+                const data = fs_1.default.readFileSync(this.path, "utf8");
             }
             catch (error) {
                 if (!fs_1.default.existsSync(this.path)) {
@@ -17,19 +17,19 @@ class DotDB {
                         fs_1.default.mkdirSync(dir, { recursive: true });
                     }
                     try {
-                        await fs_1.default.writeFileSync(this.path, "{}");
+                        fs_1.default.writeFileSync(this.path, "{}");
                     }
                     catch (error) {
                         throw new Error(`Error creating file: ${this.path}`);
                     }
                     return;
                 }
-                await fs_1.default.writeFileSync(this.path, JSON.stringify({}));
+                fs_1.default.writeFileSync(this.path, JSON.stringify({}));
             }
             try {
-                const data = await fs_1.default.readFileSync(this.path, "utf8");
+                const data = fs_1.default.readFileSync(this.path, "utf8");
                 if (!data.trim()) {
-                    await fs_1.default.writeFileSync(this.path, "{}");
+                    fs_1.default.writeFileSync(this.path, "{}");
                 }
             }
             catch (error) {
@@ -39,16 +39,16 @@ class DotDB {
         this.path = path;
         this.validate();
         this.array = {
-            push: async (key, value) => {
+            push: (key, value) => {
                 try {
-                    let data = await fs_1.default.readFileSync(this.path, "utf8");
+                    let data = fs_1.default.readFileSync(this.path, "utf8");
                     if (!data.trim()) {
-                        await fs_1.default.writeFileSync(this.path, "{}");
+                        fs_1.default.writeFileSync(this.path, "{}");
                         data = "{}";
                     }
                     let jsonData;
                     try {
-                        jsonData = await JSON.parse(data);
+                        jsonData = JSON.parse(data);
                     }
                     catch (error) {
                         throw new Error(`Error parsing JSON: ${error}`);
@@ -73,7 +73,7 @@ class DotDB {
                     }
                     current[lastKey].push(value);
                     try {
-                        await fs_1.default.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
+                        fs_1.default.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
                         return true;
                     }
                     catch (error) {
@@ -84,15 +84,15 @@ class DotDB {
                     throw new Error(`Error reading file: ${this.path}`);
                 }
             },
-            delete: async (key, value) => {
+            delete: (key, value) => {
                 try {
-                    let data = await fs_1.default.readFileSync(this.path, "utf8");
+                    let data = fs_1.default.readFileSync(this.path, "utf8");
                     if (!data.trim()) {
                         return false;
                     }
                     let jsonData;
                     try {
-                        jsonData = await JSON.parse(data);
+                        jsonData = JSON.parse(data);
                     }
                     catch (error) {
                         throw new Error(`Error parsing JSON: ${error}`);
@@ -115,7 +115,7 @@ class DotDB {
                     }
                     current[lastKey].splice(index, 1);
                     try {
-                        await fs_1.default.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
+                        fs_1.default.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
                         return true;
                     }
                     catch (error) {
@@ -128,16 +128,16 @@ class DotDB {
             }
         };
     }
-    async set(key, value) {
+    set(key, value) {
         try {
-            let data = await fs_1.default.readFileSync(this.path, "utf8");
+            let data = fs_1.default.readFileSync(this.path, "utf8");
             if (!data.trim()) {
-                await fs_1.default.writeFileSync(this.path, "{}");
+                fs_1.default.writeFileSync(this.path, "{}");
                 data = "{}";
             }
             let jsonData;
             try {
-                jsonData = await JSON.parse(data);
+                jsonData = JSON.parse(data);
             }
             catch (error) {
                 throw new Error(`Error parsing JSON: ${error}`);
@@ -152,7 +152,7 @@ class DotDB {
             }
             current[keys[keys.length - 1]] = value;
             try {
-                await fs_1.default.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
+                fs_1.default.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
             }
             catch (error) {
                 throw new Error(`Error writing file: ${this.path}`);
@@ -162,16 +162,16 @@ class DotDB {
             throw new Error(`Error reading file: ${this.path}`);
         }
     }
-    async multiset(pairs) {
+    multiset(pairs) {
         try {
-            let data = await fs_1.default.readFileSync(this.path, "utf8");
+            let data = fs_1.default.readFileSync(this.path, "utf8");
             if (!data.trim()) {
-                await fs_1.default.writeFileSync(this.path, "{}");
+                fs_1.default.writeFileSync(this.path, "{}");
                 data = "{}";
             }
             let jsonData;
             try {
-                jsonData = await JSON.parse(data);
+                jsonData = JSON.parse(data);
             }
             catch (error) {
                 throw new Error(`Error parsing JSON: ${error}`);
@@ -189,7 +189,7 @@ class DotDB {
                 current[keys[keys.length - 1]] = value;
             }
             try {
-                await fs_1.default.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
+                fs_1.default.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
             }
             catch (error) {
                 throw new Error(`Error writing file: ${this.path}`);
@@ -199,16 +199,16 @@ class DotDB {
             throw new Error(`Error reading file: ${this.path}`);
         }
     }
-    async get(key) {
+    get(key) {
         try {
-            let data = await fs_1.default.readFileSync(this.path, "utf8");
+            let data = fs_1.default.readFileSync(this.path, "utf8");
             if (!data.trim()) {
-                await fs_1.default.writeFileSync(this.path, "{}");
+                fs_1.default.writeFileSync(this.path, "{}");
                 data = "{}";
             }
             let jsonData;
             try {
-                jsonData = await JSON.parse(data);
+                jsonData = JSON.parse(data);
             }
             catch (error) {
                 throw new Error(`Error parsing JSON: ${error}`);
@@ -227,16 +227,16 @@ class DotDB {
             throw new Error(`Error reading file: ${this.path}`);
         }
     }
-    async delete(key) {
+    delete(key) {
         try {
-            let data = await fs_1.default.readFileSync(this.path, "utf8");
+            let data = fs_1.default.readFileSync(this.path, "utf8");
             if (!data.trim()) {
-                await fs_1.default.writeFileSync(this.path, "{}");
+                fs_1.default.writeFileSync(this.path, "{}");
                 data = "{}";
             }
             let jsonData;
             try {
-                jsonData = await JSON.parse(data);
+                jsonData = JSON.parse(data);
             }
             catch (error) {
                 throw new Error(`Error parsing JSON: ${error}`);
@@ -251,7 +251,7 @@ class DotDB {
             }
             delete current[keys[keys.length - 1]];
             try {
-                await fs_1.default.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
+                fs_1.default.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
             }
             catch (error) {
                 throw new Error(`Error writing file: ${this.path}`);
@@ -261,16 +261,16 @@ class DotDB {
             throw new Error(`Error reading file: ${this.path}`);
         }
     }
-    async multidelete(keys) {
+    multidelete(keys) {
         try {
-            let data = await fs_1.default.readFileSync(this.path, "utf8");
+            let data = fs_1.default.readFileSync(this.path, "utf8");
             if (!data.trim()) {
-                await fs_1.default.writeFileSync(this.path, "{}");
+                fs_1.default.writeFileSync(this.path, "{}");
                 data = "{}";
             }
             let jsonData;
             try {
-                jsonData = await JSON.parse(data);
+                jsonData = JSON.parse(data);
             }
             catch (error) {
                 throw new Error(`Error parsing JSON: ${error}`);
@@ -289,7 +289,7 @@ class DotDB {
                 }
             }
             try {
-                await fs_1.default.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
+                fs_1.default.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
             }
             catch (error) {
                 throw new Error(`Error writing file: ${this.path}`);
@@ -299,26 +299,26 @@ class DotDB {
             throw new Error(`Error reading file: ${this.path}`);
         }
     }
-    async clear(confirm) {
+    clear(confirm) {
         if (!confirm) {
             throw new Error("Please confirm that you want to clear the database.");
         }
         try {
-            await fs_1.default.writeFileSync(this.path, "{}");
+            fs_1.default.writeFileSync(this.path, "{}");
         }
         catch (error) {
             throw new Error(`Error writing file: ${this.path}`);
         }
     }
-    async all() {
+    all() {
         try {
-            let data = await fs_1.default.readFileSync(this.path, "utf8");
+            let data = fs_1.default.readFileSync(this.path, "utf8");
             if (!data.trim() || data == "{}") {
                 return undefined;
             }
             let jsonData;
             try {
-                jsonData = await JSON.parse(data);
+                jsonData = JSON.parse(data);
             }
             catch (error) {
                 throw new Error(`Error parsing JSON: ${error}`);
@@ -329,16 +329,16 @@ class DotDB {
             throw new Error(`Error reading file: ${this.path}`);
         }
     }
-    async has(key) {
+    has(key) {
         try {
-            let data = await fs_1.default.readFileSync(this.path, "utf8");
+            let data = fs_1.default.readFileSync(this.path, "utf8");
             if (!data.trim()) {
-                await fs_1.default.writeFileSync(this.path, "{}");
+                fs_1.default.writeFileSync(this.path, "{}");
                 data = "{}";
             }
             let jsonData;
             try {
-                jsonData = await JSON.parse(data);
+                jsonData = JSON.parse(data);
             }
             catch (error) {
                 throw new Error(`Error parsing JSON: ${error}`);
@@ -357,16 +357,16 @@ class DotDB {
             throw new Error(`Error reading file: ${this.path}`);
         }
     }
-    async keys() {
+    keys() {
         try {
-            const data = await fs_1.default.readFileSync(this.path, "utf8");
+            const data = fs_1.default.readFileSync(this.path, "utf8");
             if (!data.trim()) {
-                await fs_1.default.writeFileSync(this.path, "{}");
+                fs_1.default.writeFileSync(this.path, "{}");
                 return [];
             }
             let jsonData;
             try {
-                jsonData = await JSON.parse(data);
+                jsonData = JSON.parse(data);
             }
             catch (error) {
                 throw new Error(`Error parsing JSON: ${error}`);
@@ -386,16 +386,16 @@ class DotDB {
             throw new Error(`Error reading file: ${this.path}`);
         }
     }
-    async values() {
+    values() {
         try {
-            const data = await fs_1.default.readFileSync(this.path, "utf8");
+            const data = fs_1.default.readFileSync(this.path, "utf8");
             if (!data.trim()) {
-                await fs_1.default.writeFileSync(this.path, "{}");
+                fs_1.default.writeFileSync(this.path, "{}");
                 return [];
             }
             let jsonData;
             try {
-                jsonData = await JSON.parse(data);
+                jsonData = JSON.parse(data);
             }
             catch (error) {
                 throw new Error(`Error parsing JSON: ${error}`);

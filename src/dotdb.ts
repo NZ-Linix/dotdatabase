@@ -3,8 +3,8 @@ import fs from "fs";
 class DotDB {
     path: string;
     array: {
-        push: (key: string, value: any) => Promise<boolean>;
-        delete: (key: string, value: any) => Promise<boolean>;
+        push: (key: string, value: any) => boolean;
+        delete: (key: string, value: any) => boolean;
     };
 
     constructor(path: string) {
@@ -13,18 +13,18 @@ class DotDB {
         this.validate();
 
         this.array = {
-            push: async (key: string, value: any): Promise<boolean> => {
+            push: (key: string, value: any): boolean => {
                 try {
-                    let data = await fs.readFileSync(this.path, "utf8");
+                    let data = fs.readFileSync(this.path, "utf8");
 
                     if (!data.trim()) {
-                        await fs.writeFileSync(this.path, "{}");
+                        fs.writeFileSync(this.path, "{}");
                         data = "{}";
                     }
 
                     let jsonData;
                     try {
-                        jsonData = await JSON.parse(data);
+                        jsonData = JSON.parse(data);
                     } catch (error) {
                         throw new Error(`Error parsing JSON: ${error}`);
                     }
@@ -56,7 +56,7 @@ class DotDB {
                     current[lastKey].push(value);
 
                     try {
-                        await fs.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
+                        fs.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
                         return true;
                     } catch (error) {
                         throw new Error(`Error writing file: ${this.path}`);
@@ -65,9 +65,9 @@ class DotDB {
                     throw new Error(`Error reading file: ${this.path}`);
                 }
             },
-            delete: async (key: string, value: any): Promise<boolean> => {
+            delete: (key: string, value: any): boolean => {
                 try {
-                    let data = await fs.readFileSync(this.path, "utf8");
+                    let data = fs.readFileSync(this.path, "utf8");
 
                     if (!data.trim()) {
                         return false;
@@ -75,7 +75,7 @@ class DotDB {
 
                     let jsonData;
                     try {
-                        jsonData = await JSON.parse(data);
+                        jsonData = JSON.parse(data);
                     } catch (error) {
                         throw new Error(`Error parsing JSON: ${error}`);
                     }
@@ -104,7 +104,7 @@ class DotDB {
                     current[lastKey].splice(index, 1);
 
                     try {
-                        await fs.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
+                        fs.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
                         return true;
                     } catch (error) {
                         throw new Error(`Error writing file: ${this.path}`);
@@ -116,10 +116,10 @@ class DotDB {
         };
     }
 
-    validate = async () => {
+    validate = () => {
         
         try {
-            const data = await fs.readFileSync(this.path, "utf8");
+            const data = fs.readFileSync(this.path, "utf8");
         } catch ( error ) {
 
             if ( !fs.existsSync(this.path) ) {
@@ -130,7 +130,7 @@ class DotDB {
                 }
 
                 try {
-                    await fs.writeFileSync(this.path, "{}");
+                    fs.writeFileSync(this.path, "{}");
                 } catch ( error ) {
                     throw new Error(`Error creating file: ${this.path}`);
                 }
@@ -138,13 +138,13 @@ class DotDB {
 
             }
 
-            await fs.writeFileSync(this.path, JSON.stringify({}));   
+            fs.writeFileSync(this.path, JSON.stringify({}));
         }
 
         try {
-            const data = await fs.readFileSync(this.path, "utf8");
+            const data = fs.readFileSync(this.path, "utf8");
             if ( !data.trim() ) {
-                await fs.writeFileSync(this.path, "{}");
+                fs.writeFileSync(this.path, "{}");
             }
         } catch ( error ) {
             throw new Error(`Error setting file up: ${this.path}`);
@@ -152,21 +152,21 @@ class DotDB {
 
     }
 
-    async set(key: string, value: any): Promise<void> {
+    set(key: string, value: any): void {
         
         try {
 
-            let data = await fs.readFileSync(this.path, "utf8");
+            let data = fs.readFileSync(this.path, "utf8");
 
             if ( !data.trim() ) {
-                await fs.writeFileSync(this.path, "{}");
+                fs.writeFileSync(this.path, "{}");
                 data = "{}"
             }
 
             let jsonData;
 
             try {
-                jsonData = await JSON.parse(data);
+                jsonData = JSON.parse(data);
             } catch ( error ) {
                 throw new Error(`Error parsing JSON: ${error}`);
             }
@@ -184,7 +184,7 @@ class DotDB {
             current[keys[keys.length - 1]] = value;
 
             try {
-                await fs.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
+                fs.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
             } catch ( error ) {
                 throw new Error(`Error writing file: ${this.path}`);
             }
@@ -195,19 +195,19 @@ class DotDB {
 
     }
 
-    async multiset(pairs: Record<string, any>): Promise<void> {
+    multiset(pairs: Record<string, any>): void {
         try {
-            let data = await fs.readFileSync(this.path, "utf8");
+            let data = fs.readFileSync(this.path, "utf8");
 
             if (!data.trim()) {
-                await fs.writeFileSync(this.path, "{}");
+                fs.writeFileSync(this.path, "{}");
                 data = "{}";
             }
 
             let jsonData;
 
             try {
-                jsonData = await JSON.parse(data);
+                jsonData = JSON.parse(data);
             } catch (error) {
                 throw new Error(`Error parsing JSON: ${error}`);
             }
@@ -228,7 +228,7 @@ class DotDB {
             }
 
             try {
-                await fs.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
+                fs.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
             } catch (error) {
                 throw new Error(`Error writing file: ${this.path}`);
             }
@@ -237,21 +237,21 @@ class DotDB {
         }
     }
 
-    async get(key: string): Promise<any | undefined> {
+    get(key: string): any | undefined {
 
         try {
 
-            let data = await fs.readFileSync(this.path, "utf8");
+            let data = fs.readFileSync(this.path, "utf8");
 
             if ( !data.trim() ) {
-                await fs.writeFileSync(this.path, "{}");
+                fs.writeFileSync(this.path, "{}");
                 data = "{}"
             }
 
             let jsonData;
 
             try {
-                jsonData = await JSON.parse(data);
+                jsonData = JSON.parse(data);
             } catch ( error ) {
                 throw new Error(`Error parsing JSON: ${error}`);
             }
@@ -274,21 +274,21 @@ class DotDB {
 
     }
 
-    async delete(key: string): Promise<void> {
+    delete(key: string): void {
 
         try {
 
-            let data = await fs.readFileSync(this.path, "utf8");
+            let data = fs.readFileSync(this.path, "utf8");
 
             if (!data.trim()) {
-                await fs.writeFileSync(this.path, "{}");
+                fs.writeFileSync(this.path, "{}");
                 data = "{}";
             }
 
             let jsonData;
 
             try {
-                jsonData = await JSON.parse(data);
+                jsonData = JSON.parse(data);
             } catch (error) {
                 throw new Error(`Error parsing JSON: ${error}`);
             }
@@ -306,7 +306,7 @@ class DotDB {
             delete current[keys[keys.length - 1]];
 
             try {
-                await fs.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
+                fs.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
             } catch (error) {
                 throw new Error(`Error writing file: ${this.path}`);
             }
@@ -317,19 +317,19 @@ class DotDB {
 
     }
 
-    async multidelete(keys: string[]): Promise<void> {
+    multidelete(keys: string[]): void {
         try {
-            let data = await fs.readFileSync(this.path, "utf8");
+            let data = fs.readFileSync(this.path, "utf8");
 
             if (!data.trim()) {
-                await fs.writeFileSync(this.path, "{}");
+                fs.writeFileSync(this.path, "{}");
                 data = "{}";
             }
 
             let jsonData;
 
             try {
-                jsonData = await JSON.parse(data);
+                jsonData = JSON.parse(data);
             } catch (error) {
                 throw new Error(`Error parsing JSON: ${error}`);
             }
@@ -351,7 +351,7 @@ class DotDB {
             }
 
             try {
-                await fs.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
+                fs.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
             } catch (error) {
                 throw new Error(`Error writing file: ${this.path}`);
             }
@@ -360,24 +360,24 @@ class DotDB {
         }
     }
 
-    async clear(confirm: boolean): Promise<void> {
+    clear(confirm: boolean): void {
 
         if ( !confirm ) {
             throw new Error("Please confirm that you want to clear the database.");
         }
 
         try {
-            await fs.writeFileSync(this.path, "{}");
+            fs.writeFileSync(this.path, "{}");
         } catch ( error ) {
             throw new Error(`Error writing file: ${this.path}`);
         }
 
     }
 
-    async all(): Promise<Record<any, any> | undefined> {
+    all(): Record<any, any> | undefined {
 
         try {
-            let data = await fs.readFileSync(this.path, "utf8");
+            let data = fs.readFileSync(this.path, "utf8");
 
             if ( !data.trim() || data == "{}" ) {
                 return undefined;
@@ -386,7 +386,7 @@ class DotDB {
             let jsonData;
 
             try {
-                jsonData = await JSON.parse(data);
+                jsonData = JSON.parse(data);
             } catch ( error ) {
                 throw new Error(`Error parsing JSON: ${error}`);
             }
@@ -399,19 +399,19 @@ class DotDB {
 
     }
 
-    async has(key: string): Promise<boolean> {
+    has(key: string): boolean {
         try {
-            let data = await fs.readFileSync(this.path, "utf8");
+            let data = fs.readFileSync(this.path, "utf8");
 
             if (!data.trim()) {
-                await fs.writeFileSync(this.path, "{}");
+                fs.writeFileSync(this.path, "{}");
                 data = "{}";
             }
 
             let jsonData;
 
             try {
-                jsonData = await JSON.parse(data);
+                jsonData = JSON.parse(data);
             } catch (error) {
                 throw new Error(`Error parsing JSON: ${error}`);
             }
@@ -433,19 +433,19 @@ class DotDB {
         }
     }
 
-    async keys(): Promise<string[]> {
+    keys(): string[] {
         try {
-            const data = await fs.readFileSync(this.path, "utf8");
+            const data = fs.readFileSync(this.path, "utf8");
 
             if (!data.trim()) {
-                await fs.writeFileSync(this.path, "{}");
+                fs.writeFileSync(this.path, "{}");
                 return [];
             }
 
             let jsonData;
 
             try {
-                jsonData = await JSON.parse(data);
+                jsonData = JSON.parse(data);
             } catch (error) {
                 throw new Error(`Error parsing JSON: ${error}`);
             }
@@ -467,19 +467,19 @@ class DotDB {
         }
     }
 
-    async values(): Promise<any[]> {
+    values(): any[] {
         try {
-            const data = await fs.readFileSync(this.path, "utf8");
+            const data = fs.readFileSync(this.path, "utf8");
 
             if (!data.trim()) {
-                await fs.writeFileSync(this.path, "{}");
+                fs.writeFileSync(this.path, "{}");
                 return [];
             }
 
             let jsonData;
 
             try {
-                jsonData = await JSON.parse(data);
+                jsonData = JSON.parse(data);
             } catch (error) {
                 throw new Error(`Error parsing JSON: ${error}`);
             }

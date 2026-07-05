@@ -1,21 +1,21 @@
 declare class DotDB {
     path: string;
     array: {
-        push: (key: string, value: any) => Promise<boolean>;
-        delete: (key: string, value: any) => Promise<boolean>;
+        push: (key: string, value: any) => boolean;
+        delete: (key: string, value: any) => boolean;
     };
     constructor(path: string);
-    validate: () => Promise<void>;
-    set(key: string, value: any): Promise<void>;
-    multiset(pairs: Record<string, any>): Promise<void>;
-    get(key: string): Promise<any | undefined>;
-    delete(key: string): Promise<void>;
-    multidelete(keys: string[]): Promise<void>;
-    clear(confirm: boolean): Promise<void>;
-    all(): Promise<Record<any, any> | undefined>;
-    has(key: string): Promise<boolean>;
-    keys(): Promise<string[]>;
-    values(): Promise<any[]>;
+    validate: () => void;
+    set(key: string, value: any): void;
+    multiset(pairs: Record<string, any>): void;
+    get(key: string): any | undefined;
+    delete(key: string): void;
+    multidelete(keys: string[]): void;
+    clear(confirm: boolean): void;
+    all(): Record<any, any> | undefined;
+    has(key: string): boolean;
+    keys(): string[];
+    values(): any[];
 }
 export default DotDB;
 //# sourceMappingURL=dotdb.d.ts.map
