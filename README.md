@@ -7,7 +7,7 @@ npm install dotdatabase
 ```
 The NPM package can be found [here](https://www.npmjs.com/package/dotdatabase).  
   
-Current Version: `1.1.2` (Stable Version)
+Current Version: `1.1.5` (Stable Version)
 
 # Getting started
 
@@ -68,12 +68,12 @@ database.multidelete(["1", "key", "user_723"])
 
 ### Get and Has
 `get` allows you to get a value from a key from the database.  
-Make sure to use await before.
+You can optionally use await before.
 ```typescript
 const value = await database.get("key")
 console.log(value) // -> "value"
 ```
-`has` allows you to check if a key-value pair exists in the database and returns true if it exists and false if not. Make sure to use await before.
+`has` allows you to check if a key-value pair exists in the database and returns true if it exists and false if not. You can optionally use await before.
 ```typescript
 console.log( await database.has("key") ); // -> true
 console.log( await database.has("abc") ); // -> false
@@ -81,7 +81,7 @@ console.log( await database.has("abc") ); // -> false
 
 ### Keys and Values
 `keys` allows you to get all keys from the database.  
-Make sure to use await before.
+You can optionally use await before.
 ```typescript
 console.log( await database.keys() ); // ->
 // [
@@ -97,7 +97,7 @@ console.log( await database.keys() ); // ->
 // ]
 ```
 `values` allows you to get all values from the database.  
-Make sure to use await before
+You can optionally use await before
 ```typescript
 console.log( await database.values() ); // ->
 // [
@@ -115,7 +115,7 @@ console.log( await database.values() ); // ->
 
 ### All and Clear
 `all` returns the entire database as a Record.  
-Make sure to use await before
+You can optionally use await before
 ```typescript
 console.log( await database.all() ); // ->
 // {
