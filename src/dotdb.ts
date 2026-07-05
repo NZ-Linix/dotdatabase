@@ -2,11 +2,118 @@ import fs from "fs";
 
 class DotDB {
     path: string;
+    array: {
+        push: (key: string, value: any) => Promise<boolean>;
+        delete: (key: string, value: any) => Promise<boolean>;
+    };
 
     constructor(path: string) {
         this.path = path;
 
         this.validate();
+
+        this.array = {
+            push: async (key: string, value: any): Promise<boolean> => {
+                try {
+                    let data = await fs.readFileSync(this.path, "utf8");
+
+                    if (!data.trim()) {
+                        await fs.writeFileSync(this.path, "{}");
+                        data = "{}";
+                    }
+
+                    let jsonData;
+                    try {
+                        jsonData = await JSON.parse(data);
+                    } catch (error) {
+                        throw new Error(`Error parsing JSON: ${error}`);
+                    }
+
+                    const keys = key.split(".");
+                    let current = jsonData;
+
+                    for (let i = 0; i < keys.length - 1; i++) {
+                        if (!current[keys[i]] || typeof current[keys[i]] !== "object") {
+                            current[keys[i]] = {};
+                        }
+                        current = current[keys[i]];
+                    }
+
+                    const lastKey = keys[keys.length - 1];
+
+                    if (!current[lastKey]) {
+                        current[lastKey] = [];
+                    }
+
+                    if (!Array.isArray(current[lastKey])) {
+                        return false;
+                    }
+
+                    if (current[lastKey].includes(value)) {
+                        return false;
+                    }
+
+                    current[lastKey].push(value);
+
+                    try {
+                        await fs.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
+                        return true;
+                    } catch (error) {
+                        throw new Error(`Error writing file: ${this.path}`);
+                    }
+                } catch (error) {
+                    throw new Error(`Error reading file: ${this.path}`);
+                }
+            },
+            delete: async (key: string, value: any): Promise<boolean> => {
+                try {
+                    let data = await fs.readFileSync(this.path, "utf8");
+
+                    if (!data.trim()) {
+                        return false;
+                    }
+
+                    let jsonData;
+                    try {
+                        jsonData = await JSON.parse(data);
+                    } catch (error) {
+                        throw new Error(`Error parsing JSON: ${error}`);
+                    }
+
+                    const keys = key.split(".");
+                    let current = jsonData;
+
+                    for (let i = 0; i < keys.length - 1; i++) {
+                        if (!current || typeof current !== "object") {
+                            return false;
+                        }
+                        current = current[keys[i]];
+                    }
+
+                    const lastKey = keys[keys.length - 1];
+
+                    if (!current || !Array.isArray(current[lastKey])) {
+                        return false;
+                    }
+
+                    const index = current[lastKey].indexOf(value);
+                    if (index === -1) {
+                        return false;
+                    }
+
+                    current[lastKey].splice(index, 1);
+
+                    try {
+                        await fs.writeFileSync(this.path, JSON.stringify(jsonData, null, 4));
+                        return true;
+                    } catch (error) {
+                        throw new Error(`Error writing file: ${this.path}`);
+                    }
+                } catch (error) {
+                    throw new Error(`Error reading file: ${this.path}`);
+                }
+            }
+        };
     }
 
     validate = async () => {
