@@ -1,5 +1,9 @@
 declare class DotDB {
     path: string;
+    array: {
+        push: (key: string, value: any) => Promise<boolean>;
+        delete: (key: string, value: any) => Promise<boolean>;
+    };
     constructor(path: string);
     validate: () => Promise<void>;
     set(key: string, value: any): Promise<void>;
