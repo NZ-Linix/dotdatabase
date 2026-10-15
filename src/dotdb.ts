@@ -317,6 +317,10 @@ class DotDB {
 
     }
 
+    del(key: string): void {
+        this.delete(key);
+    }
+
     multidelete(keys: string[]): void {
         try {
             let data = fs.readFileSync(this.path, "utf8");

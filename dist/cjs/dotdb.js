@@ -261,6 +261,9 @@ class DotDB {
             throw new Error(`Error reading file: ${this.path}`);
         }
     }
+    del(key) {
+        this.delete(key);
+    }
     multidelete(keys) {
         try {
             let data = fs_1.default.readFileSync(this.path, "utf8");

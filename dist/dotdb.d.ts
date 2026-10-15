@@ -10,6 +10,7 @@ declare class DotDB {
     multiset(pairs: Record<string, any>): void;
     get(key: string): any | undefined;
     delete(key: string): void;
+    del(key: string): void;
     multidelete(keys: string[]): void;
     clear(confirm: boolean): void;
     all(): Record<any, any> | undefined;

@@ -24,7 +24,7 @@ const database = new DotDB("db.json"); // In the root directory
 # Methods
 
 There are ten different methods to use.  
-`set, multiset, delete, multidelete, get, has, keys, values, all, clear`  
+`set, multiset, delete, del, multidelete, get, has, keys, values, all, clear`  
   
 All the tutorials below will assume that the db is:
 ```json
@@ -60,6 +60,8 @@ database.multiset({ "k": "v", "k2": "v2" })
 `delete` allows you to remove a key from the database
 ```typescript
 database.delete("key")
+// or use the alias
+database.del("key")
 ```
 `multidelete` allows you to delete multiple keys at once
 ```typescript
